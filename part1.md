@@ -1,0 +1,184 @@
+<프론트엔드 개발자를 위한 자바스크립트 프로그래밍>
+
+- 1장 자바스크립트란 무엇인가
+  - ECMAScript(ES)
+    - 기반언어
+  - Javascript
+    - 웹브라우저에서 ECMAScript를 구현한 언어
+    - ECMAScript + DOM + BOM
+  - NodeJS
+    - 서버사이드에서 ECMAScript를 구현한 플랫폼
+  - DOM
+    - DOM은 문서를 표현하는 트리를 생성하고, 개발자는 DOM API를 통해 문서의 콘텐츠와 구조를 자유롭게 수정할 수 있다.
+  - BOM
+    - 브라우저창에 접근하고 조작할 수 있는 기술
+- 2장 HTML 속의 자바스크립트
+  - <script> 태그의 로딩
+    - 여러 <script>가 있으면 위에서부터 순서대로 로딩된다.
+    - <script> 태그에 defer 속성을 쓰면 페이지 렌더링 후에 로딩한다.
+    - <script> 태그에 async 속성을 쓰면 비동기로 렌더링한다.
+  - <script> 태그의 위치
+    - <head></head> 안에 있으면 페이지 렌더링을 지연시킨다.
+    - <body></body> 맨 끝에 넣으면 페이지 렌더링이 먼저 실행된다.
+  - 외부파일(src속성)의 장점
+    - js코드 관리가 쉽다.
+    - 브라우저가 외부파일을 캐싱한다.
+  - 문서모드
+    - 기본은 비표준 쿽스모드
+    - HTML5에서 <!DOCTYPE html>로 시작하면 표준모드
+  - <noscript> 태그
+    - 자바스크립트 기능이 꺼졌거나 지원하지 않는 브라우저에서 <noscript></noscript> 안에 있는 내용을 보여주게 한다.
+- 3장 언어의 기초
+  - 문법
+    - 스트릭트 모드
+      - 파일이나 함수 첫줄에 "use strict"
+      - 스트릭트 모드에서는 안전하지 않은 동작이 예상되는 곳에서 에러를 발생시킨다.
+    - 문장의 끝에 세미콜론을 꼭 쓰자.
+      - 세미콜론을 안 쓰면 자바스크립트 압축 과정에서 문제가 발생할 수 있다.
+  - 변수
+    - 함수에선 되도록 변수 선언에 var를 쓰자.
+      - 의도를 명확히 할 수 있고, 실수를 예방한다.
+  - 데이터타입
+    - 원시타입
+      - Boolean(true, false)
+      - String("a", ...)
+      - Number(1, 1.0, ...)
+      - Object({a:1}, ...)
+      - Null(null)
+      - Undefined(undefined)
+    - typeof 반환값
+      - Boolean : "boolean"
+      - String : "string"
+      - Number(Infinity, -Infinity, NaN 포함) : "number"
+      - Object(Null 포함) : "object"
+      - Undefined : "undefined"
+      - Function : "function"
+    - Boolean() 반환값
+      - Boolean : false -> false
+      - String : "" -> false
+      - Number
+        - 0 -> false
+        - NaN -> false
+      - Object : null -> false
+      - Undefined : 항상 -> false
+    - 부동소수점 타입의 비교연산을 주의하자.
+      - 0.1 + 0.2 == 0.3 // false
+    - isNaN() 반환값
+      - Boolean : 항상 -> false
+      - String
+        - "" -> false
+        - 숫자로 만들 수 있으면 -> false
+      - Number : NaN -> true
+      - Object
+        - null -> false
+        - 그 외 -> valueOf() 값에 따라 결정
+      - Undefined : 항상 -> true
+    - Number() 함수의 반환값
+      - Boolean
+        - true -> 1
+        - false -> 0
+      - String
+        - "" -> 0
+        - 숫자로 만들 수 있으면 -> 숫자
+        - 그 외 -> NaN
+      - Number
+        - NaN -> NaN
+        - 그 외 -> 숫자
+      - Object
+        - null -> 0
+        - 그 외 -> valueOf() 값
+      - Undefined : 항상 -> NaN
+    - 숫자 파싱 함수
+      - 문자열을 숫자로 바꿀 때 사용한다.
+      - 항상 10진수 기준으로 파싱한다.
+      - parseInt() 반환값
+        - "" -> NaN
+        - "1234blue" -> 1234
+        - "0xA" -> 10
+        - parseInt(A, 16) -> 10
+        - parseInt()의 두번째 매개변수(진법)를 꼭 넣자.
+          - 혹시 모를 에러를 예방하기 위해
+      - parseFloat() 반환값
+        - "" -> NaN
+        - "0xA" -> 0
+        - "22.5.34" -> 22.5
+        - "10.0" -> 10
+        - parseFloat()은 진법 매개변수가 없다.
+    - Number.toString() 반환값
+      - 첫번째 매개변수(진법)에 따라 출력이 다르다.
+      - n = 10;
+      - n.toString() -> "10"
+      - n.toString(2) -> "1010"
+      - n.toString(5) -> "20"
+    - String() 반환값
+      - 항상 문자열을 반환한다.
+      - Boolean : 항상 -> "불리언값"
+      - Number : 항상 -> "숫자값"
+      - String : 항상 -> 값 그대로
+      - Object
+        - null -> "null"
+        - 그 외 -> toString() 값
+      - Undefined :  항상 -> "undefined"
+    - Object
+      - 모든 객체의 원형
+      - 메소드
+        - constructor() : 생성자
+        - hasOwnProperty(propertyName) : 
+        - isPrototypeOf(object)
+        - propertyIsEnumerable(propertyName)
+        - toLocaleString()
+        - toString()
+        - valueOf()
+    - 비트 연산자(|, &, >>, <<, >>>, <<<)
+      - 양의 정수 10의 표현은 1010
+      - 음의 정수 10의 표현은 1010 -> 1의 보수 -> 1 더하기
+      - Number(10).toString(2) -> "1010"
+      - Number(-10).toString(2) -> "-1010"
+      - 비트 NOT 연산자의 반환값
+        - 숫자 부호를 바꾼 후 1을 뺀 결과
+        - ~25 // -26
+        - ~-26 // 25
+      - 시프트 연산자의 반환값
+        - 2 << 5 // 64 = 2^6
+        - 64 >> 5 // 2 = 2^1
+    - 논리 연산자(!, &&, ||)
+      - 논리 NOT 연산자의 반환값
+        - Boolean()의 반대값
+      - 논리 AND 연산자의 반환값
+        - Boolean(첫번째 피연산자)가 true면 -> 두번째 피연산자를 반환
+        - Boolean(첫번째 피연산자)가 false면 -> 첫번째 피연산자를 반환
+      - 논리 OR 연산자의 반환값U
+        - Boolean(첫번째 피연산자)가 true면 -> 첫번째 피연산자를 반환
+        - Boolean(첫번째 피연산자)가 false면 -> 두번째 피연산자를 반환
+    - 비교 연산자(<=, >=, <, >)의 반환값
+      - isNaN(두 피연산자)이 false면 -> 숫자로 바꾸어 비교한다.
+      - isNaN(두 피연산자)이 true이고 피연산자 둘 다 문자열이면 -> 아스키코드값으로 비교한다.
+      - isNaN(두 피연산자)에서 하나는 false이고 하나는 객체면 -> 객체의 valueOf()와 비교한다.
+      - isNaN(두 피연산자)에서 하나라도 true면 -> 항상 false
+    - 동일 연산자(==)의 반환값
+      - 피연산자를 비교하기 전에 타입을 강제변환 시킨다. (type coercion)
+      - isNaN(두 피연산자)이 false면 -> 숫자로 바꾸어 비교한다.
+      - isNaN(두 피연산자)이 true이고 피연산자 둘 다 문자열이면 -> 아스키코드값으로 비교한다.
+      - isNaN(두 피연산자)에서 하나는 false이고 하나는 객체면 -> 객체의 valueOf()와 비교한다.
+      - isNaN(두 피연산자)에서 하나라도 true면 -> 항상 false
+      - 두 피연산자가 모두 객체면 -> 두 객체의 참조로 비교한다.
+      - 예외적으로 null, undefined는 -> 다른 값으로 변환하지 않고 비교한다.
+      - 예외적으로 null == undefined -> true
+    - 일치 연산자(===)의 반환값
+      - 타입을 강제변환 시키지 않고 비교한다.
+      - 두 피연산자가 모두 객체면 -> 두 객체의 참조로 비교한다.
+      - 예상하기 어려운 에러 발생을 예방하기 위해 일치 연산자를 쓰자.
+    - 
+  - 문장
+    - with문의 성능
+      - 성능에 악영향이 있고 디버깅도 어렵기 때문에 쓰지 않는 게 좋다.
+    - switch문의 유연함
+      - case절에 표현식을 쓸 수 있어서 유연하다.
+  - 함수
+    - 매개변수가 유연하다.
+      - js의 함수 매개변수는 arguments라는 배열로 들어오기 때문에 시그니처에서 선언된 개수와 상관 없이 매개변수를 마음대로 넘길 수 있다.
+      - function fun(a, b) {...} 에서 arguments[1] = 10으로 바꾸면 b도 10이 된다. 하지만 b = 20으로 바꾸면 arguments[1]은 바뀌지 않는다. arguments에서 이름붙은 매개변수로의 단방향 반영이기 때문이다.
+    - 오버로딩이 없다.
+      - 함수명만 같으면 마지막 함수가 이전 함수를 덮어쓴다.
+- 4장 변수와 스코프, 메모리
+  - 
